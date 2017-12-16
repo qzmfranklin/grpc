@@ -1,8 +1,9 @@
 """Generates and compiles C++ grpc stubs from proto_library rules."""
 
-load("//:bazel/generate_cc.bzl", "generate_cc")
+load("//tools/bazel_rules/grpc:generate_cc.bzl", "generate_cc")
 
-def cc_grpc_library(name, srcs, deps, proto_only, well_known_protos, generate_mock, use_external = False, **kwargs):
+def cc_grpc_library(name, srcs, deps, proto_only, well_known_protos,
+                    generate_mock, **kwargs):
   """Generates C++ grpc classes from a .proto file.
 
   Assumes the generated classes will be used in cc_api_version = 2.
@@ -14,8 +15,6 @@ def cc_grpc_library(name, srcs, deps, proto_only, well_known_protos, generate_mo
         the compiled code of any message that the services depend on.
       well_known_protos: Should this library additionally depend on well known
         protos
-      use_external: When True the grpc deps are prefixed with //external. This
-        allows grpc to be used as a dependency in other bazel projects.
       generate_mock: When true GMOCk code for client stub is generated.
       **kwargs: rest of arguments, e.g., compatible_with and visibility.
   """
@@ -43,11 +42,7 @@ def cc_grpc_library(name, srcs, deps, proto_only, well_known_protos, generate_mo
   )
 
   if not proto_only:
-    if use_external:
-      # when this file is used by non-grpc projects
-      plugin = "//external:grpc_cpp_plugin"
-    else:
-      plugin = "//:grpc_cpp_plugin"
+    plugin = "//third_party/grpc:grpc_cpp_plugin"
 
     generate_cc(
         name = codegen_grpc_target,
@@ -58,12 +53,8 @@ def cc_grpc_library(name, srcs, deps, proto_only, well_known_protos, generate_mo
         **kwargs
     )
 
-    if use_external:
-      # when this file is used by non-grpc projects
-      grpc_deps = ["//external:grpc++_codegen_proto",
-                   "//external:protobuf"]
-    else:
-      grpc_deps = ["//:grpc++_codegen_proto", "//external:protobuf"]
+    grpc_deps = ["//third_party/grpc:grpc++_codegen_proto",
+                 "//third_party/protobuf"]
 
     native.cc_library(
         name = name,
@@ -77,6 +68,6 @@ def cc_grpc_library(name, srcs, deps, proto_only, well_known_protos, generate_mo
         name = name,
         srcs = [":" + codegen_target],
         hdrs = [":" + codegen_target],
-        deps = deps + ["//external:protobuf"],
+        deps = deps + ["//third_party/protobuf"],
         **kwargs
     )

@@ -81,7 +81,7 @@ _generate_cc = rule(
             mandatory = False,
         ),
         "_protoc": attr.label(
-            default = Label("//external:protocol_compiler"),
+            default = Label("//third_party/protobuf:protoc"),
             executable = True,
             cfg = "host",
         ),
@@ -93,6 +93,6 @@ _generate_cc = rule(
 
 def generate_cc(well_known_protos, **kwargs):
   if well_known_protos:
-    _generate_cc(well_known_protos="@com_google_protobuf//:well_known_protos", **kwargs)
+    _generate_cc(well_known_protos="//third_party/protobuf:well_known_protos", **kwargs)
   else:
     _generate_cc(**kwargs)
