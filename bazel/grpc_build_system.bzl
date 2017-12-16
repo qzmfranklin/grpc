@@ -31,14 +31,16 @@ def grpc_cc_library(name, srcs = [], public_hdrs = [], hdrs = [],
                     language = "C++", testonly = False, visibility = None,
                     alwayslink = 0):
   copts = []
+  if native.package_name():
+    copts = ["-I" + native.package_name()]
   if language.upper() == "C":
     copts = ["-std=c99"]
   native.cc_library(
     name = name,
     srcs = srcs,
-    defines = select({"//:grpc_no_ares": ["GRPC_ARES=0"],
+    defines = select({"//third_party/cc/grpc:grpc_no_ares": ["GRPC_ARES=0"],
                       "//conditions:default": [],}) +
-              select({"//:remote_execution":  ["GRPC_PORT_ISOLATED_RUNTIME=1"],
+              select({"//third_party/cc/grpc:remote_execution":  ["GRPC_PORT_ISOLATED_RUNTIME=1"],
                       "//conditions:default": [],}),
     hdrs = hdrs + public_hdrs,
     deps = deps + ["//external:" + dep for dep in external_deps],
@@ -59,7 +61,7 @@ def grpc_proto_plugin(name, srcs = [], deps = []):
     deps = deps,
   )
 
-load("//:bazel/cc_grpc_library.bzl", "cc_grpc_library")
+load("//tools/bazel_rules/grpc:cc_grpc_library.bzl", "cc_grpc_library")
 
 def grpc_proto_library(name, srcs = [], deps = [], well_known_protos = False,
                        has_services = True, use_external = False, generate_mock = False):

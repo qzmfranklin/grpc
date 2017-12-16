@@ -27,7 +27,7 @@ package(
 )
 
 load(
-    "//bazel:grpc_build_system.bzl",
+    "//tools/bazel_rules/grpc:grpc_build_system.bzl",
     "grpc_cc_library",
     "grpc_proto_plugin",
     "grpc_generate_one_off_targets",
@@ -353,12 +353,10 @@ grpc_cc_library(
         "src/compiler/ruby_generator_string-inl.h",
         "src/compiler/schema_interface.h",
     ],
-    external_deps = [
-        "protobuf_clib",
-    ],
     language = "c++",
     deps = [
         "grpc++_config_proto",
+        "//third_party/cc/protobuf:protoc_lib",
     ],
 )
 
@@ -421,15 +419,13 @@ grpc_cc_library(
     srcs = [
         "src/core/ext/census/grpc_context.cc",
     ],
-    external_deps = [
-        "nanopb",
-    ],
     language = "c++",
     public_hdrs = [
         "include/grpc/census.h",
     ],
     deps = [
         "grpc_base",
+        "//third_party/cc/nanopb",
     ],
 )
 
@@ -506,7 +502,7 @@ grpc_cc_library(
     public_hdrs = GPR_PUBLIC_HDRS,
     deps = [
         "gpr_codegen",
-        "@com_google_absl//absl/container:inlined_vector",
+        "//third_party/cc/abseil-cpp:container_inlined_vector",
     ],
 )
 
@@ -821,15 +817,13 @@ grpc_cc_library(
         "src/core/lib/transport/transport.h",
         "src/core/lib/transport/transport_impl.h",
     ],
-    external_deps = [
-        "zlib",
-    ],
     language = "c++",
     public_hdrs = GRPC_PUBLIC_HDRS,
     deps = [
         "gpr_base",
         "grpc_codegen",
         "grpc_trace",
+        "//third_party/cc/zlib",
     ],
 )
 
@@ -1035,14 +1029,12 @@ grpc_cc_library(
         "src/core/ext/filters/client_channel/lb_policy/grpclb/load_balancer_api.h",
         "src/core/ext/filters/client_channel/lb_policy/grpclb/proto/grpc/lb/v1/load_balancer.pb.h",
     ],
-    external_deps = [
-        "nanopb",
-    ],
     language = "c++",
     deps = [
         "grpc_base",
         "grpc_client_channel",
         "grpc_resolver_fake",
+        "//third_party/cc/nanopb",
     ],
 )
 
@@ -1064,15 +1056,13 @@ grpc_cc_library(
         "src/core/ext/filters/client_channel/lb_policy/grpclb/load_balancer_api.h",
         "src/core/ext/filters/client_channel/lb_policy/grpclb/proto/grpc/lb/v1/load_balancer.pb.h",
     ],
-    external_deps = [
-        "nanopb",
-    ],
     language = "c++",
     deps = [
         "grpc_base",
         "grpc_client_channel",
         "grpc_resolver_fake",
         "grpc_secure",
+        "//third_party/cc/nanopb",
     ],
 )
 
@@ -1157,13 +1147,11 @@ grpc_cc_library(
         "src/core/ext/filters/client_channel/resolver/dns/c_ares/grpc_ares_ev_driver.h",
         "src/core/ext/filters/client_channel/resolver/dns/c_ares/grpc_ares_wrapper.h",
     ],
-    external_deps = [
-        "cares",
-    ],
     language = "c++",
     deps = [
         "grpc_base",
         "grpc_client_channel",
+        "//third_party/cc/c-ares:ares",
     ],
 )
 
@@ -1479,13 +1467,11 @@ grpc_cc_library(
         "src/core/tsi/ssl_types.h",
         "src/core/tsi/transport_security_grpc.h",
     ],
-    external_deps = [
-        "libssl",
-    ],
     language = "c++",
     deps = [
         "grpc_base",
         "tsi_interface",
+        "//third_party/cc/boringssl:ssl",
     ],
 )
 
@@ -1578,12 +1564,10 @@ grpc_cc_library(
 
 grpc_cc_library(
     name = "grpc++_config_proto",
-    external_deps = [
-        "protobuf_headers",
-    ],
     language = "c++",
     public_hdrs = [
         "include/grpc++/impl/codegen/config_protobuf.h",
+        "//third_party/cc/protobuf:protobuf_headers",
     ],
 )
 
