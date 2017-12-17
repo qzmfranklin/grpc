@@ -42,7 +42,7 @@ def cc_grpc_library(name, srcs, deps, proto_only, well_known_protos,
   )
 
   if not proto_only:
-    plugin = "//third_party/grpc:grpc_cpp_plugin"
+    plugin = "//third_party/cc/grpc:grpc_cpp_plugin"
 
     generate_cc(
         name = codegen_grpc_target,
@@ -53,8 +53,8 @@ def cc_grpc_library(name, srcs, deps, proto_only, well_known_protos,
         **kwargs
     )
 
-    grpc_deps = ["//third_party/grpc:grpc++_codegen_proto",
-                 "//third_party/protobuf"]
+    grpc_deps = ["//third_party/cc/grpc:grpc++_codegen_proto",
+                 "//third_party/cc/protobuf"]
 
     native.cc_library(
         name = name,
@@ -68,6 +68,6 @@ def cc_grpc_library(name, srcs, deps, proto_only, well_known_protos,
         name = name,
         srcs = [":" + codegen_target],
         hdrs = [":" + codegen_target],
-        deps = deps + ["//third_party/protobuf"],
+        deps = deps + ["//third_party/cc/protobuf"],
         **kwargs
     )

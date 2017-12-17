@@ -356,7 +356,7 @@ grpc_cc_library(
     language = "c++",
     deps = [
         "grpc++_config_proto",
-        "//third_party/protobuf:protoc_lib",
+        "//third_party/cc/protobuf:protoc_lib",
     ],
 )
 
@@ -425,7 +425,7 @@ grpc_cc_library(
     ],
     deps = [
         "grpc_base",
-        "//third_party/nanopb",
+        "//third_party/cc/nanopb",
     ],
 )
 
@@ -502,7 +502,7 @@ grpc_cc_library(
     public_hdrs = GPR_PUBLIC_HDRS,
     deps = [
         "gpr_codegen",
-        "//third_party/abseil-cpp:container_inlined_vector",
+        "//third_party/cc/abseil-cpp:container_inlined_vector",
     ],
 )
 
@@ -823,7 +823,7 @@ grpc_cc_library(
         "gpr_base",
         "grpc_codegen",
         "grpc_trace",
-        "//third_party/zlib",
+        "//third_party/cc/zlib",
     ],
 )
 
@@ -1034,7 +1034,7 @@ grpc_cc_library(
         "grpc_base",
         "grpc_client_channel",
         "grpc_resolver_fake",
-        "//third_party/nanopb",
+        "//third_party/cc/nanopb",
     ],
 )
 
@@ -1062,7 +1062,7 @@ grpc_cc_library(
         "grpc_client_channel",
         "grpc_resolver_fake",
         "grpc_secure",
-        "//third_party/nanopb",
+        "//third_party/cc/nanopb",
     ],
 )
 
@@ -1151,7 +1151,7 @@ grpc_cc_library(
     deps = [
         "grpc_base",
         "grpc_client_channel",
-        "//third_party/c-ares:ares",
+        "//third_party/cc/c-ares:ares",
     ],
 )
 
@@ -1471,7 +1471,7 @@ grpc_cc_library(
     deps = [
         "grpc_base",
         "tsi_interface",
-        "//third_party/boringssl:ssl",
+        "//third_party/cc/boringssl:ssl",
     ],
 )
 
@@ -1567,7 +1567,7 @@ grpc_cc_library(
     language = "c++",
     public_hdrs = [
         "include/grpc++/impl/codegen/config_protobuf.h",
-        "//third_party/protobuf:protobuf_headers",
+        "//third_party/cc/protobuf:protobuf_headers",
     ],
 )
 
