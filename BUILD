@@ -27,7 +27,7 @@ package(
 )
 
 load(
-    "//tools/bazel_rules/grpc:grpc_build_system.bzl",
+    "//tools/build_rules/grpc:grpc_build_system.bzl",
     "grpc_cc_library",
     "grpc_proto_plugin",
     "grpc_generate_one_off_targets",
